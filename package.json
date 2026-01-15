@@ -1,0 +1,11 @@
+{
+  "name": "clawdbot-mattermost",
+  "module": "src/index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@biomejs/biome": "^2.3.11"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

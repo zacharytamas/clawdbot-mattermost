@@ -1,15 +1,37 @@
 # clawdbot-mattermost
 
-To install dependencies:
+Mattermost channel plugin for Clawdbot (PAT auth + WebSocket inbound).
+
+## Configuration
+
+```yaml
+channels:
+  mattermost:
+    defaultAccount: "primary"
+    allowFrom:
+      - "channel-id-1"
+    accounts:
+      primary:
+        baseUrl: "https://mattermost.example.com"
+        token: "mm-personal-access-token"
+        allowFrom:
+          - "channel-id-1"
+      secondary:
+        enabled: true
+        baseUrl: "https://mattermost.secondary"
+        token: "mm-secondary-token"
+        mediaMaxMb: 25
+```
+
+Notes:
+
+- Use `channel:<id>` targets when sending outbound.
+- Typing indicators are sent via the websocket connection.
+- Thread replies will be wired up in a follow-up (metadata already captured).
+
+## Development
 
 ```bash
 bun install
+bun test
 ```
-
-To run:
-
-```bash
-bun run src/index.ts
-```
-
-This project was created using `bun init` in bun v1.3.5. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.

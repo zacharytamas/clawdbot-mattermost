@@ -1,6 +1,5 @@
-import type { ClawdbotPluginApi } from './clawdbot.js'
-
 import { mattermostPlugin } from './channel.js'
+import type { ClawdbotPluginApi } from './clawdbot.js'
 
 const plugin = {
   id: 'clawdbot-mattermost',

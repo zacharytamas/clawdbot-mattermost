@@ -1,4 +1,3 @@
-import type { FileInfo } from '@mattermost/types/files'
 import { buildAllowlist, isAllowed } from './allowlist.js'
 import { createMattermostClient } from './client.js'
 import { fetchMedia, saveMediaBuffer } from './media.js'
@@ -36,8 +35,12 @@ type MattermostPost = {
   file_ids?: string[]
 }
 
+type MattermostFileInfo = {
+  name: string
+}
+
 type MattermostFileClient = {
-  getFileInfosForPost: (postId: string) => Promise<FileInfo[]>
+  getFileInfo: (fileId: string) => Promise<MattermostFileInfo>
   getFileUrl: (fileId: string) => string
 }
 
@@ -67,13 +70,14 @@ const hydrateMedia = async (
   if (!post.file_ids?.length) {
     return undefined
   }
-  const client = createMattermostClient(account)
+  const client = createMattermostClient(
+    account,
+  ) as unknown as MattermostFileClient
   const fileId = post.file_ids[0]
   if (!fileId) {
     return undefined
   }
-  const fileInfos = await client.getFileInfosForPost(post.id).catch(() => [])
-  const fileInfo = fileInfos.find((info) => info.id === fileId) ?? fileInfos[0]
+  const fileInfo = await client.getFileInfo(fileId)
   const fileUrl = new URL(client.getFileUrl(fileId))
   fileUrl.searchParams.set('access_token', account.token)
   const payload = await fetchMedia(

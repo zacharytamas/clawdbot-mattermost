@@ -1,7 +1,7 @@
 import type { ChannelOutboundContext, ChannelPlugin } from './clawdbot.js'
 import { mattermostConfigAdapter, resolveAccount } from './config.js'
-import { sendMattermost } from './send.js'
 import { startGateway, stopGateway } from './gateway.js'
+import { sendMattermost } from './send.js'
 import type { MattermostResolvedAccount, MattermostRuntime } from './types.js'
 
 const docsPath = 'docs/channels/mattermost'

@@ -5,6 +5,23 @@ export type PluginLogger = {
   debug?: (message: string) => void
 }
 
+export type ChannelDock = {
+  id: ChannelId
+  capabilities: ChannelCapabilities
+  config?: {
+    resolveAllowFrom?: (params: {
+      cfg: unknown
+      accountId?: string | null
+    }) => Array<string | number> | undefined
+    formatAllowFrom?: (params: {
+      cfg: unknown
+      accountId?: string | null
+      allowFrom: Array<string | number>
+    }) => string[]
+  }
+  groups?: ChannelGroupAdapter
+}
+
 export type ClawdbotPluginApi = {
   id: string
   name: string
@@ -14,6 +31,7 @@ export type ClawdbotPluginApi = {
   logger: PluginLogger
   registerChannel: <ResolvedAccount>(registration: {
     plugin: ChannelPlugin<ResolvedAccount>
+    dock?: ChannelDock
   }) => void
 }
 
